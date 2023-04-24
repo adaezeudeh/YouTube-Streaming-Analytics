@@ -1,0 +1,53 @@
+---
+swagger: "2.0"
+info:
+  title: "My API"
+  description: "API for retrieving YouTube statistics"
+  version: "1.0.0"
+consumes:
+- "application/json"
+produces:
+- "application/json"
+headers:
+    Content-Type:
+      description: "The content type of the response."
+      type: string
+paths:
+  /likes:
+    get:
+      description: "Retrieve YouTube likes statistics for all channels or a specific channel."
+      parameters:
+      - in: query
+        name: channel
+        description: "The name of the YouTube channel to retrieve statistics for. Optional."
+        required: false
+        type: string
+      - channel (optional): If provided, the API will return the aggregate data for only the specified channel.
+      Example:
+      - To get the aggregate views data for a specific channel:
+          GET /views?channel=MyChannel
+      responses:
+        200:
+          description: "OK"
+          schema:
+            type: object
+            properties:
+              likes_data:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    channel_title:
+                      type: string
+                      description: "The title of the YouTube channel."
+                    likes_sum:
+                      type: number
+                      format: float
+                      description: "The total number of likes for the channel."
+                    likes_mean:
+                      type: number
+                      format: float
+                      description: "The average number of likes per video for the channel."
+        400:
+          description: "Bad Request"
+definitions: {}
